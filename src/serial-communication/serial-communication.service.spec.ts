@@ -2,8 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { SerialCommunicationService } from './serial-communication.service';
 import { SerialPort } from 'serialport';
 import { Scale } from 'src/serial-communication/interfaces/scale.interface';
-import { serialize } from 'v8';
-import { mock } from 'node:test';
 
 jest.mock('serialport');
 
@@ -22,6 +20,7 @@ describe('SerialCommunicationService', () => {
     }).compile();
 
     service = module.get<SerialCommunicationService>(SerialCommunicationService);
+		jest.clearAllMocks();
   });
 
   it('should be defined', () => {
@@ -51,11 +50,17 @@ describe('SerialCommunicationService', () => {
 		const dataCallback = jest.fn();
 		service.onData('scale1', dataCallback);
 
-		expect(mockOn).toHaveBeenCalledWith('data', expect.any(Function));
+		// Simulate multiple data events to trigger the stable weight condition
+    const scale = service['scales'].get('scale1');
+		const dataHandler = (scale?.port?.on as jest.Mock).mock.calls.find(call => call[0] === 'data')[1];
 
+    // Simulate 5 stable readings
+    for (let i = 0; i < 5; i++) {
+        dataHandler(Buffer.from('1500'));
+    }
 
-		const onCallback = mockOn.mock.calls[0][1];
-		onCallback(Buffer.from('1500'));
+		// Use jest.runAllTimers() if you have any setTimeout in your service
+    jest.runAllTimers();
 
 		expect(dataCallback).toHaveBeenLastCalledWith(1.5);
 	});
