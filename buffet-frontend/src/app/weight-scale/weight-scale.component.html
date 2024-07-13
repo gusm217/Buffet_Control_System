@@ -1,0 +1,14 @@
+<div class="balanca-container">
+  <h2>Balança Simulada</h2>
+  <div class="weight-display">
+    <h3>Peso Atual:</h3>
+    <p>{{ currentWeight | number:'1.3-3' }} kg</p>
+  </div>
+  <div *ngIf="lastOrder" class="order-info">
+    <h3>Último Pedido:</h3>
+    <p>ID: {{ lastOrder.id }}</p>
+    <p>Peso: {{ lastOrder.weight | number:'1.3-3' }} kg</p>
+    <p>Preço: R$ {{ lastOrder.price | number:'1.2-2' }}</p>
+    <p>Tipo: {{ lastOrder.type === 'per-kilo' ? 'Por Quilo' : 'Buffet Livre' }}</p>
+  </div>
+</div>

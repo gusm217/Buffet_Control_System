@@ -1,0 +1,19 @@
+.balanca-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.weight-display, .order-info {
+  margin-top: 20px;
+}
+
+h2, h3 {
+  color: #333;
+}
+
+p {
+  margin: 5px 0;
+}
