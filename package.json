@@ -27,7 +27,8 @@
     "@nestjs/websockets": "^10.3.10",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
-    "serialport": "^12.0.0"
+    "serialport": "^12.0.0",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
@@ -38,6 +39,7 @@
     "@types/node": "^20.3.1",
     "@types/serialport": "^8.0.5",
     "@types/supertest": "^6.0.0",
+    "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
     "eslint": "^8.42.0",
@@ -68,6 +70,9 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+		"moduleNameMapper": {
+    "^@/(.*)$": "<rootDir>/$1"
+  }
   }
 }
