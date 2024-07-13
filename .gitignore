@@ -42,6 +42,9 @@ lerna-debug.log*
 .env.production.local
 .env.local
 
+# Generated configuration files
+src/config/scale.config.ts
+
 # temp directory
 .temp
 .tmp
