@@ -8,9 +8,7 @@ import { CommonModule, DecimalPipe } from '@angular/common';
 @Component({
   selector: 'app-weight-scale',
   standalone: true,
-  imports: [CommonModule, DecimalPipe
-
-	],
+  imports: [CommonModule, DecimalPipe],
   templateUrl: './weight-scale.component.html',
   styleUrl: './weight-scale.component.css'
 })
@@ -23,6 +21,7 @@ export class WeightScaleComponent implements OnInit, OnDestroy {
 	constructor(private WebsocketService: WebsocketService) {}
 
 	ngOnInit() {
+		console.log('ngOnInit initialized');
 		this.WebsocketService.connect();
 		this.weightSubscription = this.WebsocketService.onWeightUpdate().subscribe((data: WeightUpdateDto) => {
 			this.currentWeight = data.weight;
