@@ -1,4 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { resolve } from 'path';
 import { SerialPort } from 'serialport';
 import { Scale } from 'src/serial-communication/interfaces/scale.interface';
 
@@ -17,9 +18,21 @@ export class SerialCommunicationService {
 				const port = new SerialPort({
 					path: config.portPath,
 					baudRate: config.baudRate,
+					autoOpen: false,
 				});
+
+				await new Promise<void>((resolve, reject) => {
+					port.open((err) => {
+						if(err) {
+							reject(err);
+						} else {
+							resolve();
+						}
+					});
+				});
+
 				this.scales.set(config.id, { port, config, lastWeights: [] });
-				this.logger.log(`Scale ${config.id} initilialized`);
+				this.logger.log(`Scale ${config.id} initilialized on ${config.portPath}`);
 			} catch (error) {
 				this.logger.error(`Failed to initialize scale ${config.id}`, error.stack);
 			}

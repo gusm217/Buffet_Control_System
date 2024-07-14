@@ -5,8 +5,7 @@ import { OrderDto } from "../dto/order.dto";
 import { WeightUpdateDto } from "../dto/weight-update.dto";
 import { BuffetService } from "../buffet/buffet.service";
 import { Logger } from "@nestjs/common";
-import { Scale } from "@/serial-communication/interfaces/scale.interface";
-
+import { scaleConfig } from "config/scale.config";
 
 @WebSocketGateway()
 export class BuffetGateway {
@@ -31,12 +30,8 @@ export class BuffetGateway {
 	}
 
 	private initializeScales() {
-		const scaleConfigs: Scale[] = [
-			{ id: 'scale1', portPath: '/dev/ttyUSB0', baudRate: 9600, weighUnit: 'g' },
-		];
-
-		this.serialCommunicationService.initializeScales(scaleConfigs).then(() => {
-			scaleConfigs.forEach(config => {
+		this.serialCommunicationService.initializeScales(scaleConfig).then(() => {
+			scaleConfig.forEach(config => {
 				this.serialCommunicationService.onData(config.id, (weight: number) => {
 					const order = this.buffetService.processOrder(weight);
 					if (order) {
