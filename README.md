@@ -1,73 +1,61 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Buffet Control System
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Descrição
+Este projeto é um sistema de controle de buffet que se comunica com simuladores de balança através de portas COM, utilizando Node.js e NestJS no backend, e exibe os valores de peso em tempo real em uma interface frontend desenvolvida em Angular.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Requisitos do Sistema
+- Node.js (versão 14.x ou superior)
+- Typescript (versão 5.4.3)
+- Angular CLI (versão 17 - para o frontend)
+- npm (normalmente vem com Node.js)
+- Software de emulação de portas COM (ex: com0com, socat)
 
-## Description
+## Instalação
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+1. Clone o repositório
 
-## Installation
+2. Instale as dependências: <br>
+   `npm install`
 
-```bash
-$ npm install
-```
+3. Configure o ambiente e inicie a aplicação: <br>
+   `npm run dev`
+   
+Este comando irá:
+- Executar o script de setup (`setup.sh`)
+- Instalar as dependências necessárias
+- Instalar o socat (se não estiver instalado)
+- Criar portas seriais virtuais
+- Configurar a aplicação NestJS
+- Gerar e iniciar um script Python para simular uma balança
+- Iniciar o ambiente de desenvolvimento do NestJS
 
-## Running the app
+## Uso
 
-```bash
-# development
-$ npm run start
+### Iniciando a Aplicação
 
-# watch mode
-$ npm run start:dev
+Para configurar o ambiente, iniciar a simulação da balança e a aplicação em modo de desenvolvimento, use: <br>
+  `npm run dev`
 
-# production mode
-$ npm run start:prod
-```
+Este comando único cuidará de toda a configuração necessária, incluindo a simulação da balança.
 
-## Test
+Se você já executou o setup anteriormente e só precisa iniciar o ambiente de desenvolvimento (sem reconfigurar as portas seriais ou reiniciar a simulação da balança), pode usar: <br>
+  `npm run start:dev`
 
-```bash
-# unit tests
-$ npm run test
+Após iniciado o ambiente de desenvolvimento, abra um novo terminal e dê o comando `ng serve` para buildar o front da aplicação que, normalmente é disponibilizado, na porta `localhost:4200`
 
-# e2e tests
-$ npm run test:e2e
+### Sobre a Simulação da Balança
 
-# test coverage
-$ npm run test:cov
-```
+A simulação da balança é iniciada automaticamente como parte do processo de setup. Não é necessário executar o script Python separadamente.
 
-## Support
+Se você precisar ajustar a simulação da balança, o script gerado está localizado em `simulate_scale.py`. Quaisquer modificações neste script serão aplicadas na próxima vez que você executar `npm run dev`.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Configuração
 
-## Stay in touch
+O arquivo de configuração da balança está localizado em `src/config/scale.config.ts`. Este arquivo é gerado automaticamente pelo script de setup, mas pode ser modificado manualmente se necessário.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Resolução de Problemas
 
-## License
-
-Nest is [MIT licensed](LICENSE).
+- Se encontrar problemas com as portas seriais, certifique-se de que o socat está em execução e que as portas virtuais foram criadas corretamente.
+- Verifique as mensagens de saída do script de setup para informações sobre as portas virtuais criadas.
+- Se o comando `npm run dev` falhar, tente executar `npm run setup` e `npm run start:dev` separadamente para identificar onde está ocorrendo o erro. 
+   
